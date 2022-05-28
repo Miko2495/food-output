@@ -11,19 +11,11 @@
     </head>
     <body>
        <h1>食べログ</h1>
-       <div class='posts'>
-
-           @foreach($posts as $post)
-           <div class='post'>
-               <h2 class='shop_name'>
-                   <a href='/posts/{{$post->id}}'>{{$post->shop_name}}</a>
-               </h2>
+       <div class='post'>
+               <h2 class='shop_name'>{{$post->shop_name}}</h2>
                <p class='comment'>{{$post->comment}}</p>
-               </div>
-        　 @endforeach
+               <p class='updated_at'>{{$post->updated_at}}</p>
             </div>
-            <div class='paginate'>
-                {{$posts->links()}}
-            </div>
+            <div class='back'>[<a href='/'>back</a>]</div>
     </body>
 </html>

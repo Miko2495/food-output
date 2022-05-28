@@ -16,4 +16,7 @@ class Postcontroller extends Controller
         // withメソッドでビューと一緒に渡すデータを定義している(変数名=>値)
     }
     //
+    public function show(Post $post){
+        return view('posts/show')->with(['post'=>$post]);
+    }
 }
