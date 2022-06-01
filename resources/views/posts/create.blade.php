@@ -11,12 +11,18 @@
     </head>
     <body>
        <h1>食べログ</h1>
-       <div class='post'>
-               <h2 class='shop_name'>{{$post->shop_name}}</h2>
-               <p class='comment'>{{$post->comment}}</p>
-               <p class='updated_at'>{{$post->updated_at}}</p>
-            </div>
-            <p class='edit'>[<a href='/posts/{{$post->id}}/edit'>edit</a>]</p>
+       <form action='/posts' method='POST'>
+           @csrf
+           <div class='shop_name'>
+               <h2>ShopName</h2>
+               <input type='text' name='post[shop_name]' placeholder='店名'/>
+           </div>
+           <div class='comment'>
+               <h2>Comment</h2>
+               <textarea name='post[comment]' placeholder='美味しかったです'></textarea>
+           </div>
+           <input type='submit' value='保存'/>
+           </form>
             <div class='back'>[<a href='/'>back</a>]</div>
     </body>
 </html>

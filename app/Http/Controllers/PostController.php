@@ -19,4 +19,24 @@ class Postcontroller extends Controller
     public function show(Post $post){
         return view('posts/show')->with(['post'=>$post]);
     }
+
+    public function create(){
+        return view('posts/create');
+    }
+
+    public function store(Request $request, Post $post){
+        $input=$request['post'];
+        $post->fill($input)->save();
+        return redirect('/posts/'.$post->id);
+    }
+
+    public function edit(Post $post){
+        return view('posts/edit')->with(['post'=>$post]);
+    }
+
+  public function update(Request $request, Post $post){
+        $input=$request['post'];
+        $post->fill($input)->save();
+        return redirect('/posts/'.$post->id);
+    }
 }
