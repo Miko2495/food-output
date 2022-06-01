@@ -11,6 +11,7 @@
     </head>
     <body>
        <h1>食べログ</h1>
+       [<a href='/posts/create'>create</a>]
        <div class='posts'>
 
            @foreach($posts as $post)
