@@ -17,6 +17,19 @@
                <p class='updated_at'>{{$post->updated_at}}</p>
             </div>
             <p class='edit'>[<a href='/posts/{{$post->id}}/edit'>edit</a>]</p>
+            <form action='/posts/{{$post->id}}' id='form_delete' method='POST'>
+                @csrf
+                @method('DELETE')
+                <p class='delete'>[<span onclick='return deletePost(this);'>delete</span>]</p>
+                </form>
+                <script>
+                function deletePost(e){
+                    'use_strict';
+                    if (confirm('削除すると復元できません。\n本当に削除しますか?')){
+                        document.getElementById('form_delete').submit();
+                    }
+                }
+                </script>
             <div class='back'>[<a href='/'>back</a>]</div>
     </body>
 </html>
