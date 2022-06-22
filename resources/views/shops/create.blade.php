@@ -13,20 +13,16 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
     </head>
     <body>
-       <h1>編集画面</h1>
-       <form action='/posts/{{$post->id}}' method='POST'>
+       <h1>食べログ</h1>
+       <form action='/shops' method='POST'>
            @csrf
-           @method('PUT')
            <div class='shop_name'>
                <h2>ShopName</h2>
-               <input type='text' name='post[shop_name]' value='{{$post->shop_name}}'/>
+               <input type='text' name='shop[name]' placeholder='店名'/>
            </div>
-           <div class='comment'>
-               <h2>Comment</h2>
-               <textarea name='post[comment]'>{{$post->comment}}</textarea>
-               </div>
-           <input type='submit' value='更新'>
-       </form>
+           <input type='submit' value='保存'/>
+           </form>
+           <div class='back'>[<a href='/'>back</a>]</div>
     </body>
 </html>
 @endsection

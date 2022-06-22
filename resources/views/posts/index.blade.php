@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('content')
+{{Auth::user()->name}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -11,10 +16,13 @@
     </head>
     <body>
        <h1>食べログ</h1>
-       [<a href='/posts/create'>create</a>]
+       [<a href='/posts/create'>投稿する</a>]
+       [<a href='/shops/create'>店の追加</a>]
        <div class='posts'>
-
-           @foreach($posts as $post)
+       @foreach($posts as $post)
+       <a href=''>{{ $post->user->name }}</a><br>
+       <a href=''>{{ $post->category->name}}</a><br>
+       <a href=''>{{ $post->area->name}}</a>
            <div class='post'>
                <h2 class='shop_name'>
                    <a href='/posts/{{$post->id}}'>{{$post->shop_name}}</a>
@@ -28,3 +36,4 @@
             </div>
     </body>
 </html>
+@endsection
