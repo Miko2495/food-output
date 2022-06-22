@@ -36,4 +36,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // Postに対するリレーション
+    // 「1対多」の関係だから、複数形postsにする,一人のuserに対して投稿は複数
+    public function posts()
+{
+    return $this->hasMany('App\Post');
+}
 }

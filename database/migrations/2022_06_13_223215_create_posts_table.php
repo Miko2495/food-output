@@ -14,10 +14,15 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('shop_name',50);
-            $table->string('comment',200);
+            $table->increments('id');
+            $table->string('shop_name', 50);
+            $table->string('comment', 200);
+            $table->integer('area_id')->unsigned();
+            $table->integer('category_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

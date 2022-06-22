@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -21,8 +24,25 @@
                <h2>Comment</h2>
                <textarea name='post[comment]' placeholder='美味しかったです'></textarea>
            </div>
+           <div class='category'>
+               <h2>Category</h2>
+               <select name='post[category_id]'>
+                   @foreach($categories as $category)
+                   <option value='{{$category->id}}'>{{$category->name}}</option>
+                   @endforeach
+                   </select>
+           </div>
+           <div class='area'>
+               <h2>Area</h2>
+               <select name='post[area_id]'>
+                   @foreach($areas as $area)
+                   <option value='{{$area->id}}'>{{$area->name}}</option>
+                   @endforeach
+                   </select>
+           </div>
            <input type='submit' value='保存'/>
            </form>
-            <div class='back'>[<a href='/'>back</a>]</div>
+           <div class='back'>[<a href='/'>back</a>]</div>
     </body>
 </html>
+@endsection
