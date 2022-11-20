@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
-
+        <link rel="stylesheet" href="{{ secure_asset('/css/show.css') }}">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
     </head>
@@ -23,6 +23,10 @@
                <p class='comment'>{{$post->comment}}</p>
                <p class='updated_at'>{{$post->updated_at}}</p>
             </div>
+            @if ($post->image_path)
+            <!-- 画像を表示 -->
+            <img src="{{ $post->image_path }}">
+            @endif
             <p class='edit'>[<a href='/posts/{{$post->id}}/edit'>edit</a>]</p>
             <form action='/posts/{{$post->id}}' id='form_delete' method='POST'>
                 @csrf
@@ -37,9 +41,7 @@
                     }
                 }
                 </script>
-　　　　　 <div class='reviews'>
-           <p class='review'>{{$review->review}}</p>
-        　 </div>
+                <p class='review'>{{$review->review}}</p>
                 <div class='back'>[<a href='/'>back</a>]</div>
     </body>
 </html>

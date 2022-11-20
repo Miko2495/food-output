@@ -13,7 +13,9 @@
 
 
 Route::get('/', 'PostController@index')->middleware('auth');
+Route::get('/posts/create','PostController@add');
 Route::get('/posts/create','PostController@create');
+Route::post('/posts/create','PostController@up');
 Route::get('/posts/{post}/edit','PostController@edit');
 Route::put('/posts/{post}','PostController@update');
 Route::get('/posts/{post}','PostController@show');

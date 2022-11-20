@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
-
+        <link rel="stylesheet" href="{{ secure_asset('/css/index.css') }}">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
     </head>
@@ -28,6 +28,10 @@
                    <a href='/posts/{{$post->id}}'>{{$post->shop_name}}</a>
                </h2>
                <p class='comment'>{{$post->comment}}</p>
+                @if ($post->image_path)
+          <!-- 画像を表示 -->
+          <img src="{{ $post->image_path }}">
+        @endif
                </div>
         　 @endforeach
             </div>
