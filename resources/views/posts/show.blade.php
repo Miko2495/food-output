@@ -19,7 +19,7 @@
        <h3><a href=''>{{$post->area->name}}</a></h3>
        <div class='post'>
                <h2 class='shop_name'>{{$post->shop_name}}</h2>
-               <h2>[<a href='/posts/{{$post->id}}/review'>review</a>]</h2>
+               <h2>[<a href='/posts/{{$post->id}}/review'>レビューを書く</a>]</h2>
                <p class='comment'>{{$post->comment}}</p>
                <p class='updated_at'>{{$post->updated_at}}</p>
             </div>
@@ -27,11 +27,11 @@
             <!-- 画像を表示 -->
             <img src="{{ $post->image_path }}">
             @endif
-            <p class='edit'>[<a href='/posts/{{$post->id}}/edit'>edit</a>]</p>
+            <p class='edit'>[<a href='/posts/{{$post->id}}/edit'>内容を編集する</a>]</p>
             <form action='/posts/{{$post->id}}' id='form_delete' method='POST'>
                 @csrf
                 @method('DELETE')
-                <p class='delete'>[<span onclick='return deletePost(this);'>delete</span>]</p>
+                <p class='delete'>[<span onclick='return deletePost(this);'>削除する</span>]</p>
                 </form>
                 <script>
                 function deletePost(e){
@@ -42,7 +42,7 @@
                 }
                 </script>
                 <p class='review'>{{$review->review}}</p>
-                <div class='back'>[<a href='/'>back</a>]</div>
+                <div class='back'>[<a href='/'>トップページに戻る</a>]</div>
     </body>
 </html>
 @endsection

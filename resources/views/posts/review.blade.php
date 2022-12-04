@@ -21,10 +21,10 @@
                <textarea name='review[review]' placeholder='美味しかったです'></textarea>
            </div>
            <a href=''>{{$post->shop_name}}</a><br>
-           <div class='point'>
-               <h2>Point<h2>
-            　 <textarea name='review[points]' placeholder='3点'></textarea>
-            </div>
+           <!--<div class='point'>-->
+           <!--    <h2>Point<h2>-->
+           <!-- 　 <textarea name='review[points]' placeholder='3点'></textarea>-->
+           <!-- </div>-->
            <input type='submit' value='保存'/>
            </form>
            <div class='back'>[<a href='/posts/{{$post->id}}'>back</a>]</div>

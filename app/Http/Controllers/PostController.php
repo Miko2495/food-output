@@ -35,10 +35,12 @@ class Postcontroller extends Controller
     }
     public function store(PostRequest $request, Post $post){
         $image = $request->file('image');
-      // バケットの`umamimimi`フォルダへアップロード
-      $path = Storage::disk('s3')->putFile('umamimimi', $image, 'public');
-      // アップロードした画像のフルパスを取得
-      $post->image_path = Storage::disk('s3')->url($path);
+        #画像のバリデーション(画像が未選択,拡張子が指定のものでない場合に保存されない。ただし、メッセージは表示されない)
+        $request->validate(['image'=>'required|max:1024|mimes:jpg,jpeg,png,gif']);
+        // バケットの`umamimimi`フォルダへアップロード
+        $path = Storage::disk('s3')->putFile('umamimimi', $image, 'public');
+        // アップロードした画像のフルパスを取得
+        $post->image_path = Storage::disk('s3')->url($path);
         $input=$request['post'];
         // $inputの定義を追加
         $input +=['user_id'=>Auth::user()->id];
@@ -66,7 +68,7 @@ class Postcontroller extends Controller
     public function review(Post $post,Shop $shop,Review $review){
         return view('posts/review')->with(['post'=>$post,'shops'=>$shop->get()]);
     }
-    public function store2(PostRequest $request, Post $post, Review $review){
+    public function store2(PostRequest $request,Review $review){
         $input = $request['review'];  //この行を追加
         // $inputの定義を追加
         $input +=$request['points'];
