@@ -10,7 +10,8 @@ use App\Area;
 use App\Shop;
 use App\Review;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Storage;
 
 class Postcontroller extends Controller
 {
@@ -22,22 +23,57 @@ class Postcontroller extends Controller
         // withメソッドでビューと一緒に渡すデータを定義している(変数名=>値)
     }
     //
-    public function show(Post $post){
-        return view('posts/show')->with(['post'=>$post]);
+    public function show(Post $post,Review $review){
+        return view('posts/show')->with(['post'=>$post,'review'=>$review]);
+    }
+    public function add() {
+         return view('posts/create');
     }
 
     public function create(User $user,Category $category,Area $area){
         return view('posts/create')->with(['users'=>$user->get(),'categories'=>$category->get(),'areas'=>$area->get()]);
-
     }
-      public function review(Post $post,Shop $shop,Review $review){
-        return view('posts/review')->with(['post'=>$post,'shop'=>$shop->get()]);
-    }
-
-    public function store2(Request $request, Post $post, Review $review){
-        $input = $request['review'];  //この行を追加
-        $review->fill($input)->save();
+    public function store(PostRequest $request, Post $post){
+        $image = $request->file('image');
+        #画像のバリデーション(画像が未選択,拡張子が指定のものでない場合に保存されない。ただし、メッセージは表示されない)
+        $request->validate(['image'=>'required|max:1024|mimes:jpg,jpeg,png,gif']);
+        // バケットの`umamimimi`フォルダへアップロード
+        $path = Storage::disk('s3')->putFile('umamimimi', $image, 'public');
+        // アップロードした画像のフルパスを取得
+        $post->image_path = Storage::disk('s3')->url($path);
+        $input=$request['post'];
+        // $inputの定義を追加
+        $input +=['user_id'=>Auth::user()->id];
+        $post->fill($input)->save();
         return redirect('/posts/'.$post->id);
+    }
+
+    // public function up(Request $request,Post $post){
+    // //   $post = new Post;
+    // //   $form = $request->all();
+
+    //   //s3アップロード開始
+    //   $image = $request->file('image');
+    //   // バケットの`umamimimi`フォルダへアップロード
+    //   $path = Storage::disk('s3')->putFile('umamimimi', $image, 'public');
+    //   // アップロードした画像のフルパスを取得
+    //   $post->image_path = Storage::disk('s3')->url($path);
+
+    //   $input=$request['post'];
+    //   $post->fill($input)->save();
+
+    //   return view('posts/show')->with(['post'=>$post]);
+    // }
+
+    public function review(Post $post,Shop $shop,Review $review){
+        return view('posts/review')->with(['post'=>$post,'shops'=>$shop->get()]);
+    }
+    public function store2(PostRequest $request,Review $review){
+        $input = $request['review'];  //この行を追加
+        // $inputの定義を追加
+        $input +=$request['points'];
+        $review->fill($input)->save();
+        return view('posts/show')->with(['review'=>$review,'post'=>$post]);
     }
     // public function store2(Request $request,Post $post,Review $review){
     //     return redirect('/posts/'.$shop->id);
@@ -50,21 +86,22 @@ class Postcontroller extends Controller
     //     return redirect('/posts/'.$post->id);
     // }
 
-    public function store(Request $request, Post $post,Review $review){
-        $input=$request['post'];
-        // $inputの定義を追加
-        $input +=['user_id'=>Auth::user()->id];
-        $post->fill($input)->save();
-        return redirect('/posts/'.$post->id);
-    }
+
 
     public function edit(Post $post,User $user){
+
         return view('posts/edit')->with(['post'=>$post,'users'=>$user->get()]);
     }
 
-    public function update(Request $request, Post $post){
+    public function update(PostRequest $request, Post $post){
+        $image = $request->file('image');
+        // バケットの`umamimimi`フォルダへアップロード
+        $path = Storage::disk('s3')->putFile('umamimimi', $image, 'public');
+        // アップロードした画像のフルパスを取得
+        $post->image_path = Storage::disk('s3')->url($path);
         $input=$request['post'];
-        $input +=['user_id'=>$request->user()->id];
+        // $inputの定義を追加
+        $input +=['user_id'=>Auth::user()->id];
         $post->fill($input)->save();
         return redirect('/posts/'.$post->id);
     }

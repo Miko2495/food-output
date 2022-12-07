@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('shop_name', 50);
             $table->string('comment', 200);
+            $table->string('image_path')->nullable();
             $table->integer('area_id')->unsigned();
             $table->integer('category_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
